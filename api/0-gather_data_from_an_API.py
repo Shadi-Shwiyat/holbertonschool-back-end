@@ -14,7 +14,7 @@ def toDo():
 
     if response.status_code == 200:
         data = response.json()
-        employee_name = data["name"]
+        employee_name = data[0]
         done_tasks = sum(1 for item in data if item["completed"])
         total_tasks = len(data)
 
@@ -22,7 +22,8 @@ def toDo():
               f" tasks({done_tasks}/{total_tasks}):")
 
         for item in data:
-            print(f'\t {item["title"]}')
+            if item["completed"]:
+                print(f'\t {item["title"]}')
 
     else:
         print("Error: Unable to fetch data.")
