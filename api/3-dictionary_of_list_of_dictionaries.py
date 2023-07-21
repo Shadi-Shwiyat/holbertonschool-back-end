@@ -5,6 +5,7 @@
 import json
 import requests
 
+
 def toDo():
     """ Function exports all employees to a json file """
     todo_list = []
@@ -38,8 +39,9 @@ def toDo():
             else:
                 print("Error: Unable to fetch todo data.")
 
-        else:
-            print("Error: Unable to fetch user data.")
+    else:
+        print(f"Error: Unable to fetch user data. Status Code: {emp_response.status_code}")
+        print(emp_response.text)
 
     with open(f'todo_all_employees.json', mode='w', newline='') as file:
         json.dump(todo_dict, file)
