@@ -9,19 +9,27 @@ from sys import argv
 def toDo():
     """ Function retrieves the todos list from api """
     emp_id = int(argv[1])
-    url = f"https://jsonplaceholder.typicode.com/users/{emp_id}/todos"
-    response = requests.get(url)
+    todo_url = f"https://jsonplaceholder.typicode.com/users/{emp_id}/todos"
+    id_response = requests.get(todo_url)
 
-    if response.status_code == 200:
-        data = response.json()
-        employee_name = data[0]
-        done_tasks = sum(1 for item in data if item["completed"])
-        total_tasks = len(data)
+    if id_response.status_code == 200:
+        todo_data = id_response.json()
+        done_tasks = sum(1 for item in todo_data if item["completed"])
+        total_tasks = len(todo_data)
 
-        print(f"Employee {employee_name} is done with"
-              f" tasks({done_tasks}/{total_tasks}):")
+        emp_name_url = "https://jsonplaceholder.typicode.com/users"
+        name_response = requests.get(emp_name_url)
 
-        for item in data:
+        if name_response.status_code == 200:
+            name_data = name_response.json()
+            for user in name_data:
+                if user["id"] == emp_id:
+                    emp_name = user["name"]
+
+            print(f"Employee {emp_name} is done with"
+                  f" tasks({done_tasks}/{total_tasks}):")
+
+        for item in todo_data:
             if item["completed"]:
                 print(f'\t {item["title"]}')
 
