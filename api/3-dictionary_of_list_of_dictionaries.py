@@ -8,7 +8,6 @@ import requests
 
 def toDo():
     """ Function exports all employees to a json file """
-    todo_list = []
     todo_dict = {}
 
     emp_url = "https://jsonplaceholder.typicode.com/users"
@@ -27,6 +26,7 @@ def toDo():
 
             if todo_response.status_code == 200:
                 todo_data = todo_response.json()
+                todo_list = []
 
                 for item in todo_data:
                     todo_list.append({
@@ -40,8 +40,7 @@ def toDo():
                 print("Error: Unable to fetch todo data.")
 
     else:
-        print(f"Error: Unable to fetch user data. Status Code: {emp_response.status_code}")
-        print(emp_response.text)
+        print("Error: Unable to fetch user data.")
 
     with open(f'todo_all_employees.json', mode='w', newline='') as file:
         json.dump(todo_dict, file)
