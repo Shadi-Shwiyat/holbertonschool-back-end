@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ This script uses REST API to retrieve the task completed
-    by a given employee ID, then exports it to a json file """
+    by a given employee ID, then exports it to a csv file """
 
 import json
 import requests
@@ -8,7 +8,7 @@ from sys import argv
 
 
 def toDo():
-    """ Function exports todo list to a json file """
+    """ Function exports todo list to a csv file """
     emp_id = int(argv[1])
     todo_url = f"https://jsonplaceholder.typicode.com/users/{emp_id}/todos"
     id_response = requests.get(todo_url)
