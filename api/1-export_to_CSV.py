@@ -25,7 +25,7 @@ def toDo():
             name_data = name_response.json()
             for user in name_data:
                 if user["id"] == emp_id:
-                    emp_name = user["name"]
+                    usr_name = user["username"]
         else:
             print("Error: Unable to fetch data.")
 
@@ -33,7 +33,7 @@ def toDo():
         for item in todo_data:
             todo_list.append({
                 "USER_ID": emp_id,
-                "USERNAME": emp_name,
+                "USERNAME": usr_name,
                 "TASK_COMPLETED_STATUS":
                 ("True" if item['completed'] else "False"),
                 "TASK_TITLE": item['title']
