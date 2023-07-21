@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ This script uses REST API to retrieve the task completed
-    by a given employee ID """
+    by a given employee ID, then exports it to a csv file """
 
 import requests
 from sys import argv
@@ -8,7 +8,7 @@ import csv
 
 
 def toDo():
-    """ Function retrieves the todos list from api """
+    """ Function exports todo list to a csv file """
     emp_id = int(argv[1])
     todo_url = f"https://jsonplaceholder.typicode.com/users/{emp_id}/todos"
     id_response = requests.get(todo_url)
@@ -26,15 +26,30 @@ def toDo():
             for user in name_data:
                 if user["id"] == emp_id:
                     emp_name = user["name"]
-
-            print(f"Employee {emp_name} is done with"
-                  f" tasks({done_tasks}/{total_tasks}):")
         else:
             print("Error: Unable to fetch data.")
 
+        todo_list = []
         for item in todo_data:
-            if item["completed"]:
-                print(f'\t {item["title"]}')
+            todo_list.append({
+                "USER_ID": emp_id,
+                "USERNAME": emp_name,
+                "TASK_COMPLETED_STATUS":
+                ("True" if item['completed'] else "False"),
+                "TASK_TITLE": item['title']
+            })
+
+        with open(f'{emp_id}.csv', mode='w', newline='') as file:
+            fieldnames = [
+                "USER_ID",
+                "USERNAME",
+                "TASK_COMPLETED_STATUS",
+                "TASK_TITLE"
+                ]
+            csv_writer = csv.DictWriter(file, fieldnames=fieldnames,
+                                        quoting=csv.QUOTE_ALL)
+            csv_writer.writerows(todo_list)
+
     else:
         print("Error: Unable to fetch data.")
 
