@@ -2,9 +2,9 @@
 """ This script uses REST API to retrieve the task completed
     by a given employee ID, then exports it to a csv file """
 
+import csv
 import requests
 from sys import argv
-import csv
 
 
 def toDo():
