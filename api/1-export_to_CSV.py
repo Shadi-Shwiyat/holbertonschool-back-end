@@ -4,6 +4,7 @@
 
 import requests
 from sys import argv
+import csv
 
 
 def toDo():
